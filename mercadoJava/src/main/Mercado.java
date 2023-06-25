@@ -176,51 +176,52 @@ public class Mercado {
             }
 
             System.out.println();
-            System.out.println("|DIGITE 0 ID DO PRODUTO PARA COLOCAR NO CARRINHO              |");
+            System.out.println("|DIGITE O ID DO PRODUTO PARA COLOCAR NO CARRINHO              |");
             System.out.println("|Digite '0' para voltar ao menu                               |");
             System.out.println("|Obs: Adicione um de cada vez                                 |");
 
 
             int id = input.nextInt(); // O usuario irá digitar o ID do produto para colocar no carrinho
-            boolean isPresent = false; // Boolean para verificar se tem coisa no carrinho;
+            boolean isPresent = false, flag = false; // Boolean para verificar se tem coisa no carrinho;
 
-            for (Produto produto: produtos) {
-
-                if (id == produto.getId()){
-                    int qtd = 0;
-                    try {
-                        qtd = carrinho.get(produto); // Checa se o produto está no carrinho e incrementa quantidade.
-                        carrinho.put(produto, qtd +1);
-                    }catch (NullPointerException e){
-                        // Se o produto for primeiro do carrinho
-                        carrinho.put(produto, produto.getId());
-                    }
-
-                    isPresent = true;
-
-                    if (isPresent){
-                        System.out.println("Deseja adicionar outro produto ao carrinho?");
-                        System.out.println("Digite 1 para sim ou 0 para finalizar a compra.\n");
-                        int option = input.nextInt();
-
-                        if (option == 1){
-                            selecionarProdutos();
-                        } else {
-                            finalizarCompra();
+            if(id == 0){
+                menu();
+            }else{
+                for (Produto produto: produtos) {
+                    if (id == produto.getId()){
+                        flag = true;
+                        int qtd = 0;
+                        try {
+                            qtd = carrinho.get(produto); // Checa se o produto está no carrinho e incrementa quantidade.
+                            carrinho.put(produto, qtd +1);
+                        }catch (NullPointerException e){
+                            // Se o produto for primeiro do carrinho
+                            carrinho.put(produto, produto.getId());
                         }
+    
+                        isPresent = true;
+    
+                        if (isPresent){
+                            System.out.println("Deseja adicionar outro produto ao carrinho?");
+                            System.out.println("Digite 1 para sim ou 0 para finalizar a compra.\n");
+                            int option = input.nextInt();
+    
+                            if (option == 1){
+                                selecionarProdutos();
+                            } else {
+                                finalizarCompra();
+                            }
+                        }
+                        break;
                     }
-
-                } else if (id == 0){
-                    menu();
-                } else {
+                }
+                if(flag == false) {
                     ErrorMesage.errorMensagem3();
                     selecionarProdutos();
                 }
             }
-
-
         } else {
-            System.out.println("Nçao existem produtos cadastrados!");
+            System.out.println("Não existem produtos cadastrados!");
             menu();
         }
     }
