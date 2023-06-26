@@ -22,6 +22,8 @@ public class Mercado {
     }
 
     private static void menu(){
+        System.out.println();
+        System.out.println();
         System.out.println("|=============================================================|");
         System.out.println("|---------------------- SUPERMERCADOS ------------------------|");
         System.out.println("|---------------------- DANIEL  BMEND ------------------------|");
@@ -174,7 +176,7 @@ public class Mercado {
                 System.out.println();
                 System.out.printf("|%s\n", produto);
             }
-
+            System.out.println("Produtos no carrinho: " + carrinho.size());
             System.out.println();
             System.out.println("|DIGITE O ID DO PRODUTO PARA COLOCAR NO CARRINHO              |");
             System.out.println("|Digite '0' para voltar ao menu                               |");
@@ -190,26 +192,30 @@ public class Mercado {
                 for (Produto produto: produtos) {
                     if (id == produto.getId()){
                         flag = true;
-                        int qtd = 0;
+                        int qtd;
                         try {
                             qtd = carrinho.get(produto); // Checa se o produto está no carrinho e incrementa quantidade.
+                            System.out.println(carrinho.get(produto));
                             carrinho.put(produto, qtd +1);
+                            System.out.println("Produto (" + produto.getNome() + ") adicionado!");
                         }catch (NullPointerException e){
                             // Se o produto for primeiro do carrinho
-                            carrinho.put(produto, produto.getId());
+                            carrinho.put(produto, 1);
+                            System.out.println("Produto (" + produto.getNome() + ") adicionado!");
                         }
-    
+                        System.out.println("Produtos no carrinho: " + carrinho.size());
                         isPresent = true;
-    
+
                         if (isPresent){
+                            System.out.println();
                             System.out.println("Deseja adicionar outro produto ao carrinho?");
-                            System.out.println("Digite 1 para sim ou 0 para finalizar a compra.\n");
+                            System.out.println("Digite 1 para sim ou 0 para ir ao carrinho comprar.\n");
                             int option = input.nextInt();
-    
+
                             if (option == 1){
                                 selecionarProdutos();
                             } else {
-                                finalizarCompra();
+                                verCarrinho();
                             }
                         }
                         break;
@@ -226,35 +232,96 @@ public class Mercado {
         }
     }
 
+
     private static void  verCarrinho(){
-        System.out.println(" ---Produtos no seu carrinho! ---");
+        System.out.println("|=============================================================|");
+        System.out.println("|------------------- CARRINHO DE COMPRAS ---------------------|");
+        System.out.println("|                                                             |");
+        System.out.println();
         if (carrinho.size() > 0){
             for (Produto produto : carrinho.keySet()){
-                System.out.println("Produto: " + produto + "\nQuantidade: " + carrinho.get(produto));
+                System.out.println("Produto: " + produto.getNome() + " " + Utils.doubleString(produto.getPreco())
+                        + "\nQuantidade: " + carrinho.get(produto));
+                System.out.println();
             }
+            System.out.println();
+            System.out.println("Verifique os itens do seu carrinho, " +
+                               "\npara comprar digite 1, para remover um item digite 2" +
+                               "\npara adicionar algo digite 3, para voltar ao menu digite 0");
+            int option = input.nextInt();
+
+            if (option == 0){
+                menu();
+            } else if (option == 1) {
+                finalizarCompra();
+            } else if (option == 2){
+                removerProdutos();
+            } else if (option == 3) {
+                selecionarProdutos();
+            } else {
+                ErrorMesage.errorMensagem();
+                verCarrinho();
+            }
+
         }else {
-            System.out.println("Carrinho vazio!");
+            System.out.println("Seu carrinho está vazio!\nPara colocar produtos digite 1 e para voltar ao menu digite 0");
+            int option = input.nextInt();
+            if (option == 1){
+                selecionarProdutos();
+            } else if (option == 0) {
+                menu();
+            } else {
+                ErrorMesage.errorMensagem2();
+                menu();
+            }
+
         }
 
-        menu();
+    }
+
+
+    private static void removerProdutos(){
+
     }
 
     private static void finalizarCompra(){
         Double valorCompra = 0.0;
-        System.out.println("Seus Produtos!");
+        System.out.println("|=============================================================|");
+        System.out.println("|--------------------- FINALIZAR COMPRA ----------------------|");
+        System.out.println("|                                                             |");
 
         for (Produto produto : carrinho.keySet()){
             int qtd = carrinho.get(produto);
             valorCompra += produto.getPreco() * qtd;
-            System.out.println(produto);
+            System.out.println(produto.getNome());
             System.out.println("Quantidade: " + qtd);
+            System.out.println("Total: " + produto.getPreco() * qtd);
+            System.out.println();
         }
-        System.out.println("O valor da sua compra é: " + Utils.doubleString(valorCompra));
-        carrinho.clear();
+        System.out.println();
+        System.out.println("O valor da sua compra é:" +
+                           "\n------------------------");
+        System.out.println(Utils.doubleString(valorCompra));
+        System.out.println("Para comprar digite 1       |      Para voltar ao menu digite 0");
+        int lastOption = input.nextInt();
 
-        System.out.println("Obrigado pela preferência!");
-        menu();
+        if (lastOption == 0){
+            menu();
+        } else if (lastOption == 1) {
+            carrinho.clear();
+            System.out.println("Obrigado pela preferência e volte sempre! " +
+                    "\nDigite 0 para ir ao menu ou digite qualquer coisa para sair do mercado!");
 
+            int finish = input.nextInt();
+
+            if (finish == 0)
+                menu();
+
+
+        } else {
+            ErrorMesage.errorMensagem();
+            finalizarCompra();
+        }
 
     }
 
