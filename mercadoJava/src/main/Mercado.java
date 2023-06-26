@@ -13,60 +13,64 @@ public class Mercado {
     private static Scanner input = new Scanner(System.in);
     private static ArrayList<Produto> produtos;
     private static Map<Produto, Integer> carrinho;
-
-
+    
+    
     public static void main(String[] args) {
         produtos = new ArrayList<>();
         carrinho = new HashMap<>();
-        menu(); // CRIAR O MÉOTOD MENU NA MAIN PARA RODAR AO LIGAR.
+        menu();
     }
-
+    
     private static void menu(){
-        System.out.println();
-        System.out.println();
-        System.out.println("|=============================================================|");
-        System.out.println("|---------------------- SUPERMERCADOS ------------------------|");
-        System.out.println("|---------------------- DANIEL  BMEND ------------------------|");
-        System.out.println("|                                                             |");
-        System.out.println("|                                                             |");
-        System.out.println("|        Selecione o número da ação que deseja realizar       |");
-        System.out.println("|                                                             |");
-        System.out.println("|       1- CADASTRAR          |          2- GERENCIR          |");
-        System.out.println("|       3- PRODUTOS           |          4- CARRINHO          |");
-        System.out.println("|                                                             |");
-        System.out.println("|                          5- SAIR                            |");
-        System.out.println("|                                                             |");
-        System.out.println("|=============================================================|");
-        System.out.println();
-        System.out.print("DIGITE AQUI O NÚMERO: ");
+        boolean flag = true;
+        
+        while(flag){
+            System.out.println("|=============================================================|");
+            System.out.println("|---------------------- SUPERMERCADOS ------------------------|");
+            System.out.println("|---------------------- DANIEL  BMEND ------------------------|");
+            System.out.println("|                                                             |");
+            System.out.println("|                                                             |");
+            System.out.println("|        Selecione o número da ação que deseja realizar       |");
+            System.out.println("|                                                             |");
+            System.out.println("|       1- CADASTRAR          |          2- GERENCIR          |");
+            System.out.println("|       3- PRODUTOS           |          4- CARRINHO          |");
+            System.out.println("|                                                             |");
+            System.out.println("|                          5- SAIR                            |");
+            System.out.println("|                                                             |");
+            System.out.println("|=============================================================|");
+            System.out.println();
+            System.out.print("DIGITE AQUI O NÚMERO: ");
+            try{
+                int option = input.nextInt(); // MUDAR PRA DIGITAR APENAS UM NUMERO
 
-        int option = input.nextInt(); // MUDAR PRA DIGITAR APENAS UM NUMERO
-
-        switch (option){
-            // AREA DO DONO DO MERCADO
-            case 1:
-                cadastrarProdutos();
-                break;
-            case 2:
-                gerenciarProdutos();
-                break;
-                // AREA DO CLIENTE
-            case 3:
-                selecionarProdutos();
-                break;
-            case 4:
-                verCarrinho();
-                break;
-            case 5:
-                sairMercado(); // CRIAR A MENSAGEM DE VOLTE SEMPRE E O SYSTEM.EXIT PARA PARAR O PROGRAMA.
-            default:
+                switch (option){
+                    // AREA DO DONO DO MERCADO
+                    case 1:
+                    cadastrarProdutos();
+                    break;
+                    case 2:
+                    gerenciarProdutos();
+                    break;
+                    // AREA DO CLIENTE
+                    case 3:
+                    selecionarProdutos();
+                    break;
+                    case 4:
+                    verCarrinho();
+                    break;
+                    case 5:
+                    flag = false; // CRIAR A MENSAGEM DE VOLTE SEMPRE E O SYSTEM.EXIT PARA PARAR O PROGRAMA.
+                    default:
+                    ErrorMesage.errorMensagem();
+                    break;
+                }
+            }catch(Exception e){
                 ErrorMesage.errorMensagem();
-                menu();
-                break;
+                input.next();
+            }
         }
-
     }
-
+    
     private static void cadastrarProdutos(){ // PEDIR SENHA DE PESSOAL AUTORIZADO PARA CADASTRAR (SENHA 12345)
         System.out.println("\n|=============================================================|");
         System.out.println("|------------------- CADASTRO DE PRODUTOS --------------------|");
@@ -76,55 +80,55 @@ public class Mercado {
         System.out.println("|   PARA CADASTRAR DIGITE 1   |  PARA VOLTAR AO MENU DIGITE 0 |");
         System.out.println();
         System.out.print("|DIGITE AQUI A OPÇÃO: ");
-
+        
         int option = input.nextInt();
-
+        
         // IFELSE SOBRE A OPÇÃO QUE O USUARIO FAZER
         if (option == 1) {
             System.out.println("|------------------------ CADASTRANDO ------------------------|");
-
+            
             System.out.print("\n| Digite o nome do produto: ");//O USUARIO IRA DIGITAR O NOME E SERÁ ARMAZENADO NA VARIAVEL nome
             String nome = input.next();
-
+            
             System.out.print("| Digite o preço do produto (apenas numero e ','): ");
             //O USUARIO IRA DIGITAR O VALOR E SERÁ ARMAZENADO NA VARIAVEL preco
             Double preco = input.nextDouble();
-
+            
             Produto produto = new Produto(nome, preco);//Um objeto da classe PRODUTO será criado
             produtos.add(produto); //O objeto criado será adicionado a arraylist produtos
-
+            
             System.out.printf("\nO produto (%s) foi cadastrado com sucesso!\n", nome);
             System.out.println("\n| PARA CADASTRAR OUTRO PRODUTO DIGITE 2    |    PARA VOLTAR AO MENU DIGITE 0 |");
-
-
+            
+            
             //IFELSE PARA SABER SE O USUARIO VAI QUERER CADASTRAR UM NOVO PRODUTO OU VOLTAR AO MENU
             int optioninside = input.nextInt();
             if (optioninside == 2){
                 cadastrarProdutos();
             }else if(optioninside == 0){
-                menu();
+                // menu();
             }else {
                 ErrorMesage.errorMensagem2();
-                menu();
+                // menu();
             }
-
+            
         } else if (option == 0) {
             System.out.println("Você selecionou a opção de voltar ao menu");
-            menu();
+            // menu();
         } else {
             ErrorMesage.errorMensagem();
             cadastrarProdutos();
         }
-
+        
     }
-
+    
     private static void gerenciarProdutos() { // PEDIR SENHA DE PESSOAL AUTORIZADO PARA GERENCIAR (SENHA 12345)
         System.out.println("\n|=============================================================|");
         System.out.println("|---------------------- ACESSO RESTRITO ----------------------|");
         System.out.println("|                                                             |");
         System.out.println("|  DIGITE A SENHA PARA ACESSAR A GERÊNCIA                     |");
         System.out.println("|  Senha: 12345                                              |");
-
+        
         int senha = input.nextInt();
         if (senha == 12345) {
             if (produtos.size() > 0) {
@@ -133,45 +137,45 @@ public class Mercado {
                     System.out.println(produto);
                 }
                 System.out.println(produtos.size() + " produtos cadastrados, digite 1 para cadastrar um novo produto," +
-                        "\ndigite 2 para remover um produto" +
-                        " ou digite 0 para voltar."); // COLOCAR UM IFELSE E UM SCANNER DA OPÇÃO
-
+                "\ndigite 2 para remover um produto" +
+                " ou digite 0 para voltar."); // COLOCAR UM IFELSE E UM SCANNER DA OPÇÃO
+                
                 int opcao = input.nextInt();
                 if (opcao == 1){
                     cadastrarProdutos();
                 } else if (opcao == 2) {
                     System.out.println("Vou criar esse método ainda");
                 } else if (opcao == 0) {
-                    menu();
+                    // menu();
                 } else {
                     ErrorMesage.errorMensagem2();
-                    menu();
+                    // menu();
                 }
-
+                
             } else {
                 System.out.println("Nenhum produto cadastrado, porfavor digite 0 para voltar.");
                 int menu = input.nextInt();
                 if (menu == 00){
-                    menu();
+                    // menu();
                 }else {
                     ErrorMesage.errorMensagem2();
-                    menu();
+                    // menu();
                 }
             }
-
-
+            
+            
         } else {
             ErrorMesage.errorMensagem4();
             gerenciarProdutos();
         }
     }
-
+    
     private static void selecionarProdutos(){
         if (produtos.size() > 0){
             System.out.println("|=============================================================|");
             System.out.println("|------------------- PRODUTOS DISPONIVEIS --------------------|");
             System.out.println("|                                                             |");
-
+            
             for (Produto produto: produtos) {
                 System.out.println();
                 System.out.printf("|%s\n", produto);
@@ -181,13 +185,13 @@ public class Mercado {
             System.out.println("|DIGITE O ID DO PRODUTO PARA COLOCAR NO CARRINHO              |");
             System.out.println("|Digite '0' para voltar ao menu                               |");
             System.out.println("|Obs: Adicione um de cada vez                                 |");
-
-
+            
+            
             int id = input.nextInt(); // O usuario irá digitar o ID do produto para colocar no carrinho
             boolean isPresent = false, flag = false; // Boolean para verificar se tem coisa no carrinho;
-
+            
             if(id == 0){
-                menu();
+                // menu();
             }else{
                 for (Produto produto: produtos) {
                     if (id == produto.getId()){
@@ -202,10 +206,10 @@ public class Mercado {
                             // Se o produto for primeiro do carrinho
                             carrinho.put(produto, 1);
                             System.out.println("Produto (" + produto.getNome() + ") adicionado!");
-                        }
+
                         System.out.println("Produtos no carrinho: " + carrinho.size());
                         isPresent = true;
-
+                          
                         if (isPresent){
                             System.out.println();
                             System.out.println("Deseja adicionar outro produto ao carrinho?");
@@ -228,10 +232,9 @@ public class Mercado {
             }
         } else {
             System.out.println("Não existem produtos cadastrados!");
-            menu();
+            // menu();
         }
     }
-
 
     private static void  verCarrinho(){
         System.out.println("|=============================================================|");
@@ -282,8 +285,9 @@ public class Mercado {
 
     private static void removerProdutos(){
 
-    }
 
+    }
+    
     private static void finalizarCompra(){
         Double valorCompra = 0.0;
         System.out.println("|=============================================================|");
@@ -298,6 +302,7 @@ public class Mercado {
             System.out.println("Total: " + produto.getPreco() * qtd);
             System.out.println();
         }
+      
         System.out.println();
         System.out.println("O valor da sua compra é:" +
                            "\n------------------------");
@@ -322,12 +327,11 @@ public class Mercado {
             ErrorMesage.errorMensagem();
             finalizarCompra();
         }
-
     }
-
+    
     private static void sairMercado(){
-
+        
     }
-
+    
 }
 
