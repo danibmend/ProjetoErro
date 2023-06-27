@@ -4,7 +4,7 @@ import utils.Utils;
 
 public class Produto {
     // Coloquei um contador para que toda vez que adicionarem um produto o número do contador aumenta
-    private static int count = 1;
+    private static int count = 0;
 
     // Atributos do prooduto
     private int id;
@@ -16,7 +16,7 @@ public class Produto {
         this.nome = nome;
         this.preco = preco;
         this.id = Produto.count;
-        Produto.count ++; // A PARTIR DO PRIMEIRO PRODUTO CRIADO SEMPRE SERÁ ACRESCENTADO +1 AO PROXIMO ID.
+        Produto.count++; // A PARTIR DO PRIMEIRO PRODUTO CRIADO SEMPRE SERÁ ACRESCENTADO +1 AO PROXIMO ID.
     }
 
     // MÉTODOS GET E SETT
