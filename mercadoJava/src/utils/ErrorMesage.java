@@ -21,9 +21,11 @@ public class ErrorMesage {
 
     public static void errorMensagem(){
         System.out.println();
-        System.out.println(redBackground + black +"|                       OPÇÃO INVALIDA!!                      |" +
+        System.out.println(redBackground + black +"|                        OPÇÃO INVALIDA!!                      |" +
                 reset);
-        System.out.println(redBackground + black +"|         LEIA AS OPÇÕES DISPONIVEIS E TENTE NOVAMENTE        |"+
+        System.out.println(redBackground + black +"|         PORFAVOR NÃO DIGITAR O QUE NÃO ESTÁ SENDO PEDIDO     |"+
+                reset);
+        System.out.println(redBackground + black +"|                         VOLTE AO MENU                        |" +
                 reset);
         System.out.println();
     }
@@ -38,7 +40,7 @@ public class ErrorMesage {
 
     public static void errorMensagem3(){
         System.out.println();
-        System.out.println(redBackground + black +"|                      PRODUTO INDISPONIVEL                   |" +
+        System.out.println(redBackground + black +"|                     PRODUTO NÃO ENCONTRADO                  |" +
                 reset);
         System.out.println(redBackground + black +"|                 VERIFIQUE SE O ID ESTÁ CORRETO              |"+
                 reset);
@@ -50,6 +52,15 @@ public class ErrorMesage {
         System.out.println(redBackground + black +"|                       SENHA INCORRETA                       |" +
                 reset);
         System.out.println(redBackground + black +"|                        Senha : 12345                        |"+
+                reset);
+        System.out.println();
+    }
+
+    public static void errorMensagem5(){
+        System.out.println();
+        System.out.println(redBackground + black +"|               NÃO EXISTEM PRODUTOS DISPONIVEIS              |" +
+                reset);
+        System.out.println(redBackground + black +"|                     PARA SEREM REMOVIDOS                    |"+
                 reset);
         System.out.println();
     }
